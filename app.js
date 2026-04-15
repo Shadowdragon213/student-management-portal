@@ -1,5 +1,5 @@
 // 🌐 CHANGE THIS LATER WHEN DEPLOYED--------------------
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "http://localhost:500https://student-management-portal-backendstucture.onrender.com0";
 
 // ➕ ADD STUDENT----------------------------------------------------------
 async function addStudent() {
