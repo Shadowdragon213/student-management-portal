@@ -14,7 +14,7 @@ function logout() {
 async function addStudent() {
   const name = document.getElementById("name").value;
   const age = document.getElementById("age").value;
-  const course = document.getElementById("course").value;
+  const course = document.getElementById("course").value.toUpperCase();
   const marks = document.getElementById("marks").value;
   const grade = document.getElementById("grade").value;
   const msg = document.getElementById("msg");
@@ -37,6 +37,12 @@ async function addStudent() {
     const data = await res.text();
     msg.innerText = data;
 
+   document.getElementById("name").value = "";
+   document.getElementById("age").value = "";
+   document.getElementById("course").value = "";
+   document.getElementById("marks").value = "";
+   document.getElementById("grade").value = "";
+
     viewStudents();
 
   } catch {
@@ -55,9 +61,9 @@ window.viewStudents = async function () {
       }
     });
 
-    const students = await res.json();
+const students = await response.json();
 
-    output.innerHTML = "";
+output.innerHTML = ""; 
 
     students.forEach(s => {
       output.innerHTML += `
