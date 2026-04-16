@@ -3,21 +3,55 @@ dns.setDefaultResultOrder('ipv4first');
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "mysecret123";
+
+function verifyToken(req, res, next) {
+  const token = req.headers["authorization"];
+
+  if (!token) {
+    return res.send("Access Denied");
+  }
+
+  try {
+    const verified = jwt.verify(token, SECRET_KEY);
+    req.user = verified;
+    next();
+  } catch {
+    res.send("Invalid Token");
+  }
+}
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/login", async (req, res) => {
+const userSchema = new mongoose.Schema({
+  email: String,
+  password: String
+});
+const User = mongoose.model("User", userSchema);
+
+app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email, password });
+  const existingUser = await User.findOne({ email });
 
-  if (user) {
-    res.send("success");
-  } else {
-    res.send("fail");
+  if (existingUser) {
+    return res.send("User already exists");
   }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = new User({
+    email,
+    password: hashedPassword
+  });
+
+  await newUser.save();
+
+  res.send("Signup successful");
 });
 
 //  Connect to MongoDB----------------------
@@ -33,28 +67,36 @@ const studentSchema = new mongoose.Schema({
   grade: String
 });
 
-const userSchema = new mongoose.Schema({
-  email: String,
-  password: String
-});
 
-const User = mongoose.model("User", userSchema);
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email, password });
+const user = await User.findOne({ email });
 
-  if (user) {
-    res.send("success");
-  } else {
-    res.send("fail");
-  }
+if (!user) {
+  return res.send("fail");
+}
+
+const isMatch = await bcrypt.compare(password, user.password);
+
+if (isMatch) {
+  const token = jwt.sign(
+    { email: user.email },
+    SECRET_KEY,
+    { expiresIn: "1h" }
+  );
+
+  res.json({ token });
+} else {
+  res.send("fail");
+}
 });
 
 const Student = mongoose.model("Student", studentSchema);
 
 // ➕ Add student-----------------
-app.post("/add", async (req, res) => {
+app.post("/add", verifyToken, async (req, res) => {
   const student = new Student({
     name: req.body.name,
     age: req.body.age,
@@ -68,7 +110,7 @@ app.post("/add", async (req, res) => {
 });
 
 // ✏️ Update student----------
-app.put("/update/:id", async (req, res) => {
+app.put("/update/:id", verifyToken, async (req, res) => {
   try {
     const updatedStudent = await Student.findByIdAndUpdate(
       req.params.id,
@@ -89,12 +131,12 @@ app.put("/update/:id", async (req, res) => {
 });
 
 // 📄 Get all students--------------
-app.get("/students", async (req, res) => {
+app.get("/students", verifyToken, async (req, res) =>  {
     const students = await Student.find();
     res.json(students);
 });
 
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/delete/:id", verifyToken, async (req, res) => {
   await Student.findByIdAndDelete(req.params.id);
   res.send("Student deleted");
 });

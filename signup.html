@@ -112,7 +112,7 @@ async function signup() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("https://student-management-portal-backendstucture.onrender.com/signup", {
+  const res = await fetch("http://localhost:5000/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -120,9 +120,10 @@ async function signup() {
     body: JSON.stringify({ email, password })
   });
 
-  const result = await res.text();
+const result = await res.text();
+console.log(result); // debug
 
-  document.getElementById("msg").innerText = result;
+document.getElementById("msg").innerText = result || "No response";
 }
 </script>
 

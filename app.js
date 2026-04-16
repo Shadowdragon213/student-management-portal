@@ -1,7 +1,7 @@
 let searchTimeout;
 
 // 🌐 CHANGE THIS LATER WHEN DEPLOYED--------------------
-const BASE_URL = "https://student-management-portal-backendstucture.onrender.com";
+const BASE_URL = "http://localhost:5000";
 
 function logout() {
   alert("Logged out successfully");
@@ -10,7 +10,7 @@ function logout() {
 }
 
 // ➕ ADD STUDENT----------------------------------------------------------
-async function addStudent() {
+window.addStudent = async function () {
   const name = document.getElementById("name").value;
   const age = document.getElementById("age").value;
   const course = document.getElementById("course").value;
@@ -18,12 +18,13 @@ async function addStudent() {
   const grade = document.getElementById("grade").value;
 
   const response = await fetch(`${BASE_URL}/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ name, age, course, marks, grade })
-  });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": localStorage.getItem("token")
+  },
+  body: JSON.stringify({ name, age, course, marks, grade })
+});
 
   const result = await response.text();
   const msg = document.getElementById("msg");
@@ -43,7 +44,7 @@ document.getElementById("course").value = "";
 document.getElementById("marks").value = "";
 document.getElementById("grade").value = "";
 
-const msg = document.getElementById("msg");
+
 
 // empty check-----------------------------------------
 if (!name || !age || !course || !marks || !grade) {
@@ -70,7 +71,7 @@ if (marks < 0 || marks > 100) {
 }
 
 // 📄 VIEW STUDENTS (FROM DATABASE)---------------------------------
-async function viewStudents() {
+window.viewStudents = async function () {
   const output = document.getElementById("output");
 output.innerHTML = `
   <div style="font-size:20px; opacity:0.7;">
@@ -79,7 +80,11 @@ output.innerHTML = `
 `;
 
  try {
-  const response = await fetch(`${BASE_URL}/students`);
+  const response = await fetch(`${BASE_URL}/students`, {
+  headers: {
+    "Authorization": localStorage.getItem("token")
+  }
+});
 
   if (!response.ok) {
     output.innerHTML = "<p>Error loading data</p>";
@@ -132,15 +137,18 @@ output.innerHTML = `
 }
 
 // ❌ DELETE STUDENT (NEW - DATABASE)-------------------------
-async function deleteStudent() {
+window.deleteStudent = async function () {
  const id = document.getElementById("id").value.trim();
  if (!id) {
   alert("Enter ID");
   return;
 }
 
- await fetch(`${BASE_URL}/delete/${id.trim()}`, {
-  method: "DELETE"
+ fetch(`${BASE_URL}/delete/${id}`, {
+  method: "DELETE",
+  headers: {
+    "Authorization": localStorage.getItem("token")
+  }
 });
 
   document.getElementById("msg").innerText = "Student deleted!";
@@ -151,7 +159,7 @@ async function deleteStudent() {
 }
 
 // ✏️ Update student---------------------------
-async function updateStudent() {
+window.updateStudent = async function () {
   const id = document.getElementById("id").value.trim();
   const name = document.getElementById("name").value;
   const age = document.getElementById("age").value;
@@ -161,11 +169,12 @@ async function updateStudent() {
   
 
   const response = await fetch(`${BASE_URL}/update/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": localStorage.getItem("token")
+  },
+  body: JSON.stringify({
   ...(name && { name }),
   ...(age && { age }),
   ...(course && { course }),
@@ -187,7 +196,7 @@ document.getElementById("course").value = "";
 document.getElementById("marks").value = "";
 document.getElementById("grade").value = "";
 
-const msg = document.getElementById("msg");
+
 
 // empty check----------------------------------------------------
 if (!name || !age || !course || !marks || !grade) {
@@ -214,12 +223,16 @@ if (marks < 0 || marks > 100) {
 }
 
 // Load Student--------------------------------
-async function loadStudentById() {
+window.loadStudentById = async function () {
   const id = document.getElementById("id").value.trim();
 
   if (!id) return;
 
-  const response = await fetch(`${BASE_URL}/students`);
+  const response = await fetch(`${BASE_URL}/students`, {
+  headers: {
+    "Authorization": localStorage.getItem("token")
+  }
+});
   const students = await response.json();
   const student = students.find(s => s._id === id);
 
@@ -254,7 +267,11 @@ function searchStudent() {
       return;
     }
 
-    const response = await fetch(`${BASE_URL}/students`);
+    const response = await fetch(`${BASE_URL}/students`, {
+  headers: {
+    "Authorization": localStorage.getItem("token")
+  }
+});
     const students = await response.json();
 
     const filtered = students.filter(s =>
