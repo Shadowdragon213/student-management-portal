@@ -8,6 +8,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  // simple hardcoded user (for now)
+  if (email === "admin@gmail.com" && password === "1234") {
+    res.send("success");
+  } else {
+    res.send("fail");
+  }
+});
+
 //  Connect to MongoDB----------------------
 mongoose.connect("mongodb://admin:ares123@ac-4mrpl32-shard-00-00.vpti9v8.mongodb.net:27017,ac-4mrpl32-shard-00-01.vpti9v8.mongodb.net:27017,ac-4mrpl32-shard-00-02.vpti9v8.mongodb.net:27017/studentDB?ssl=true&replicaSet=atlas-62hsbc-shard-0&authSource=admin&retryWrites=true&w=majority")
   .then(() => console.log("MongoDB Connected 🤍"))
