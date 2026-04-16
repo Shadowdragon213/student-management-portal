@@ -1,5 +1,8 @@
+let searchTimeout;
+
 // 🌐 CHANGE THIS LATER WHEN DEPLOYED--------------------
 const BASE_URL = "https://student-management-portal-backendstucture.onrender.com";
+
 
 // ➕ ADD STUDENT----------------------------------------------------------
 async function addStudent() {
@@ -18,9 +21,17 @@ async function addStudent() {
   });
 
   const result = await response.text();
-  alert(result);
+  const msg = document.getElementById("msg");
+    msg.innerText = "Student added!";
+    msg.className = "success";
+    msg.innerText = "Something went wrong!";
+    msg.className = "error";
+   setTimeout(() => {
+  msg.innerText = "";
+  msg.className = "";
+}, 2000);
 
-  document.getElementById("id").value = "";
+document.getElementById("id").value = "";
 document.getElementById("name").value = "";
 document.getElementById("age").value = "";
 document.getElementById("course").value = "";
@@ -33,7 +44,11 @@ document.getElementById("grade").value = "";
 // 📄 VIEW STUDENTS (FROM DATABASE)---------------------------------
 async function viewStudents() {
   const output = document.getElementById("output");
- output.innerHTML = "<p>Loading students...</p>";
+output.innerHTML = `
+  <div style="font-size:20px; opacity:0.7;">
+    ⏳ Loading...
+  </div>
+`;
 
  try {
   const response = await fetch(`${BASE_URL}/students`);
@@ -52,24 +67,34 @@ async function viewStudents() {
     return;
   }
 
-  students.forEach(s => {
-   output.innerHTML += `
-  <div style="
+  students.forEach(student => {
+ output.innerHTML += `
+  <div class="card" style="
+    background:#0f172a;
+    padding:20px;
     margin:15px;
-    padding:15px;
-    background:#020617;
     border-radius:12px;
-    text-align:center;
-    box-shadow:0 0 10px rgba(0,0,0,0.3);
-    width: 60%;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+    width:300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   ">
-    <p><b>ID:</b> ${s._id}</p>
-    <p><b>Name:</b> ${s.name}</p>
-    <p><b>Age:</b> ${s.age}</p>
-    <p><b>Course:</b> ${s.course}</p>
-    <p><b>Marks:</b> ${s.marks}</p>
-    <p><b>Grade:</b> ${s.grade}</p>
+    <p><b>ID:</b> ${student._id}</p>
+    <p><b>Name:</b> ${student.name}</p>
+    <p><b>Age:</b> ${student.age}</p>
+    <p><b>Course:</b> ${student.course}</p>
+    <p><b>Marks:</b> ${student.marks}</p>
+    <p><b>Grade:</b> ${student.grade}</p>
   </div>
+
+  #msg.success {
+  color: #22c55e; /* green */
+}
+
+#msg.error {
+  color: #ef4444; /* red */
+}
 `;
   });
 
@@ -90,7 +115,10 @@ async function deleteStudent() {
   method: "DELETE"
 });
 
-  alert("Student Deleted");
+  document.getElementById("msg").innerText = "Student deleted!";
+  setTimeout(() => {
+  document.getElementById("msg").innerText = "";
+}, 2000);
   viewStudents();
 }
 
@@ -119,8 +147,11 @@ async function updateStudent() {
   });
 
   const result = await response.json();
-  alert("Student updated!");
-  document.getElementById("id").value = "";
+document.getElementById("msg").innerText = "Student updated!";
+setTimeout(() => {
+  document.getElementById("msg").innerText = "";
+}, 2000);
+document.getElementById("id").value = "";
 document.getElementById("name").value = "";
 document.getElementById("age").value = "";
 document.getElementById("course").value = "";
@@ -142,7 +173,12 @@ async function loadStudentById() {
   const student = students.find(s => s._id === id);
 
   if (!student) {
-    alert("Student not found");
+  document.getElementById("msg").innerText = "Student not found!";
+    
+    setTimeout(() => {      
+  document.getElementById("msg").innerText = "";
+}, 2000);
+
     return;
   }
 
@@ -151,4 +187,52 @@ async function loadStudentById() {
   document.getElementById("course").value = student.course || "";
   document.getElementById("marks").value = student.marks || "";
   document.getElementById("grade").value = student.grade || "";
+}
+
+
+// Search Student------------------------------------------------
+function searchStudent() {
+  clearTimeout(searchTimeout);
+
+  searchTimeout = setTimeout(async () => {
+    const searchValue = document.getElementById("search").value.toLowerCase();
+
+    if (!searchValue) {
+      document.getElementById("msg").innerText = "";
+      document.getElementById("output").innerHTML = "";
+      return;
+    }
+
+    const response = await fetch(`${BASE_URL}/students`);
+    const students = await response.json();
+
+    const filtered = students.filter(s =>
+      s.name.toLowerCase().includes(searchValue)
+    );
+
+    const output = document.getElementById("output");
+    output.innerHTML = "";
+
+    if (filtered.length === 0) {
+      output.innerHTML = "<p>No matching students found</p>";
+      return;
+    }
+
+    filtered.forEach(student => {
+      output.innerHTML += `
+        <div class="card" style="
+          background:#0f172a;
+          padding:20px;
+          margin:15px;
+          border-radius:12px;
+          width:300px;
+        ">
+          <p><b>Name:</b> ${student.name}</p>
+          <p><b>Course:</b> ${student.course}</p>
+        </div>
+        
+      `;
+    });
+
+  }, 400); // delay (400ms)
 }
