@@ -1,7 +1,7 @@
 let searchTimeout;
 
 // 🌐 CHANGE THIS LATER WHEN DEPLOYED--------------------
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://student-management-portal4444.onrender.com";
 
 function logout() {
   alert("Logged out successfully");
