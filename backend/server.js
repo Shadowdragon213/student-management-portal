@@ -8,11 +8,13 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "mysecret123";
 
 function verifyToken(req, res, next) {
-  const token = req.headers["authorization"];
+  const authHeader = req.headers["authorization"];
 
-  if (!token) {
+  if (!authHeader) {
     return res.send("Access Denied");
   }
+
+  const token = authHeader.split(" ")[1]; 
 
   try {
     const verified = jwt.verify(token, SECRET_KEY);
@@ -79,12 +81,13 @@ app.post("/login", async (req, res) => {
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
+if (isMatch) {
+  const token = jwt.sign({ email: user.email }, SECRET_KEY);
 
-  if (isMatch) {
-    return res.send("success");
-  } else {
-    return res.send("fail");
-  }
+  return res.json({ token }); // ✅ THIS IS THE KEY
+} else {
+  return res.send("fail");
+}
 });
 
 const Student = mongoose.model("Student", studentSchema);
@@ -134,8 +137,8 @@ app.delete("/delete/:id", verifyToken, async (req, res) => {
   await Student.findByIdAndDelete(req.params.id);
   res.send("Student deleted");
 });
+const PORT = process.env.PORT || 5000;
 
-// 🚀 Server----------
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
