@@ -51,7 +51,7 @@ app.post("/signup", async (req, res) => {
 
   await newUser.save();
 
-  res.send("Signup successful");
+  res.send("success");
 });
 
 //  Connect to MongoDB----------------------
@@ -72,25 +72,19 @@ const studentSchema = new mongoose.Schema({
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-const user = await User.findOne({ email });
+  const user = await User.findOne({ email });
 
-if (!user) {
-  return res.send("fail");
-}
+  if (!user) {
+    return res.send("fail");
+  }
 
-const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
 
-if (isMatch) {
-  const token = jwt.sign(
-    { email: user.email },
-    SECRET_KEY,
-    { expiresIn: "1h" }
-  );
-
-  res.json({ token });
-} else {
-  res.send("fail");
-}
+  if (isMatch) {
+    return res.send("success");
+  } else {
+    return res.send("fail");
+  }
 });
 
 const Student = mongoose.model("Student", studentSchema);

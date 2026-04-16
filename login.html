@@ -128,17 +128,16 @@ async function login() {
     body: JSON.stringify({ email, password })
   });
 
- const data = await response.json();
+  const data = await response.text();
 
-if (data.token) {
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("userEmail", email);
+  if (data === "success") {
+    localStorage.setItem("isLoggedIn", "true");
 
-  alert("Login Successful!");
-  window.location.href = "dashboard.html";
-} else {
-  alert("Invalid Credentials");
-}
+    alert("Login Successful!");
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Invalid Credentials");
+  }
 }
 </script>
 
