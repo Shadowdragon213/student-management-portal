@@ -1,20 +1,22 @@
-const dns = require('dns');
-dns.setDefaultResultOrder('ipv4first');
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
 const SECRET_KEY = "mysecret123";
 
+// ✅ VERIFY TOKEN
 function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
 
-  if (!authHeader) {
-    return res.send("Access Denied");
-  }
+  if (!authHeader) return res.send("Access Denied");
 
-  const token = authHeader.split(" ")[1]; 
+  const token = authHeader.split(" ")[1];
 
   try {
     const verified = jwt.verify(token, SECRET_KEY);
@@ -25,118 +27,81 @@ function verifyToken(req, res, next) {
   }
 }
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+// ✅ MONGODB
+mongoose.connect("mongodb://admin:ares123@ac-4mrpl32-shard-00-00.vpti9v8.mongodb.net:27017,ac-4mrpl32-shard-00-01.vpti9v8.mongodb.net:27017,ac-4mrpl32-shard-00-02.vpti9v8.mongodb.net:27017/studentDB?ssl=true&replicaSet=atlas-62hsbc-shard-0&authSource=admin&retryWrites=true&w=majority")
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
 
-const userSchema = new mongoose.Schema({
+// ✅ USER
+const User = mongoose.model("User", {
   email: String,
   password: String
 });
-const User = mongoose.model("User", userSchema);
 
+// ✅ SIGNUP
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
-  const existingUser = await User.findOne({ email });
+  const existing = await User.findOne({ email });
+  if (existing) return res.send("User exists");
 
-  if (existingUser) {
-    return res.send("User already exists");
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = new User({
-    email,
-    password: hashedPassword
-  });
-
-  await newUser.save();
+  const hashed = await bcrypt.hash(password, 10);
+  await new User({ email, password: hashed }).save();
 
   res.send("success");
 });
 
-//  Connect to MongoDB----------------------
-mongoose.connect("mongodb://admin:ares123@ac-4mrpl32-shard-00-00.vpti9v8.mongodb.net:27017,ac-4mrpl32-shard-00-01.vpti9v8.mongodb.net:27017,ac-4mrpl32-shard-00-02.vpti9v8.mongodb.net:27017/studentDB?ssl=true&replicaSet=atlas-62hsbc-shard-0&authSource=admin&retryWrites=true&w=majority")
-  .then(() => console.log("MongoDB Connected 🤍"))
-  .catch(err => console.log(err));
-// 📦 Schema
-const studentSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  course: String,  
-  marks: Number,
-  grade: String
-});
-
-
-
+// ✅ LOGIN (FIXED)
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-
-  if (!user) {
-    return res.send("fail");
-  }
+  if (!user) return res.send("fail");
 
   const isMatch = await bcrypt.compare(password, user.password);
-if (isMatch) {
-  const token = jwt.sign({ email: user.email }, SECRET_KEY);
 
-  return res.json({ token }); // ✅ THIS IS THE KEY
-} else {
-  return res.send("fail");
-}
+  if (isMatch) {
+    const token = jwt.sign({ email: user.email }, SECRET_KEY);
+    return res.json({ token }); // 🔥 IMPORTANT
+  } else {
+    return res.send("fail");
+  }
 });
 
-const Student = mongoose.model("Student", studentSchema);
+// ✅ STUDENT
+const Student = mongoose.model("Student", {
+  name: String,
+  age: Number,
+  course: String,
+  marks: Number,
+  grade: String
+});
 
-// ➕ Add student-----------------
+// ADD
 app.post("/add", verifyToken, async (req, res) => {
-  const student = new Student({
-    name: req.body.name,
-    age: req.body.age,
-    marks: req.body.marks,
-    grade: req.body.grade,
-    course: req.body.course
-  });
-
-  await student.save();
+  await new Student(req.body).save();
   res.send("Student added");
 });
 
-// ✏️ Update student----------
-app.put("/update/:id", verifyToken, async (req, res) => {
-  try {
-    const updatedStudent = await Student.findByIdAndUpdate(
-      req.params.id,
-      {
-        name: req.body.name,
-        age: req.body.age,
-        course: req.body.course,
-        marks: req.body.marks,
-        grade: req.body.grade
-      },
-      { new: true }
-    );
-
-    res.json(updatedStudent);
-  } catch (err) {
-    res.status(500).send("Error updating student");
-  }
+// GET
+app.get("/students", verifyToken, async (req, res) => {
+  const students = await Student.find();
+  res.json(students);
 });
 
-// 📄 Get all students--------------
-app.get("/students", verifyToken, async (req, res) =>  {
-    const students = await Student.find();
-    res.json(students);
-});
-
+// DELETE
 app.delete("/delete/:id", verifyToken, async (req, res) => {
   await Student.findByIdAndDelete(req.params.id);
-  res.send("Student deleted");
+  res.send("Deleted");
 });
+
+// UPDATE
+app.put("/update/:id", verifyToken, async (req, res) => {
+  await Student.findByIdAndUpdate(req.params.id, req.body);
+  res.send("Updated");
+});
+
+// 🚀 PORT FIX (CRITICAL FOR RENDER)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
