@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    
     <title>Login - Student Portal</title>
     <style>
 
-        #bgVideo {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
-    object-fit: cover;
-    opacity: 0.3;
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
 }
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: linear-gradient(to right, #141e30, #243b55);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-        }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(44,26,77,0.7), rgba(95,44,130,0.7));
+  z-index: -1;
+}
+
+         body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
         .login-box {
             background: #1e293b;
@@ -31,6 +42,7 @@
             border-radius: 10px;
             text-align: center;
             width: 300px;
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.3);
         }
 
         input {
@@ -53,18 +65,54 @@
         button:hover {
             background: #1d4ed8;
         }
+
+        p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
     </style>
 </head>
 <body>
-    <video autoplay muted loop id="bgVideo">
-    <source src="BG2.mp4" type="video/mp4">
+ <video autoplay muted loop id="bgVideo">
+  <source src="BG2.mp4" type="video/mp4">
 </video>
 
+<div class="overlay"></div>
+
 <div class="login-box">
-    <h2>Login</h2>
-    <input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+  <h2>Login</h2>
+
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <p style="margin-top:15px;">
+    Don't have an account? <a href="signup.html">Signup</a>
+  </p>
+  <p style="margin-top:10px;">
+  <a href="index.html">← Back to Home</a>
+</p>
 </div>
 
 <script>
@@ -83,12 +131,17 @@ async function login() {
   const result = await response.text();
 
   if (result === "success") {
-    alert("Login Successful!");
-    window.location.href = "dashboard.html";
-  } else {
+  localStorage.setItem("isLoggedIn", "true");
+localStorage.setItem("userEmail", email); //-----------------------------------
+
+  alert("Login Successful!");
+  window.location.href = "dashboard.html";
+} else {
     alert("Invalid Credentials");
   }
 }
 </script>
+
+
 </body>
 </html>

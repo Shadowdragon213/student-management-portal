@@ -3,6 +3,11 @@ let searchTimeout;
 // 🌐 CHANGE THIS LATER WHEN DEPLOYED--------------------
 const BASE_URL = "https://student-management-portal-backendstucture.onrender.com";
 
+function logout() {
+  alert("Logged out successfully");
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "login.html";
+}
 
 // ➕ ADD STUDENT----------------------------------------------------------
 async function addStudent() {

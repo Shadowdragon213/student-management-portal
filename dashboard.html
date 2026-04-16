@@ -2,6 +2,13 @@
 <html>
 <head>
 
+  <script>
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  alert("Please login first!");
+  window.location.href = "login.html";
+}
+</script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
@@ -232,11 +239,19 @@ button:active {
   <button onclick="deleteStudent()">Delete Student</button>
   <button onclick="updateStudent()">Update Student</button>
   <button onclick="loadStudentById()">Load Student</button>
+  <button onclick="logout()">Logout</button>
 </div>
 
     <div id="output" style="margin-top:20px;"></div>
 </div>
-<script src="app.js"></script>
+<script>
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  alert("Please login first!");
+  window.location.href = "login.html";
+}
+</script>
+
+<script src = "app.js"></script>
 
 </body>
 </html>

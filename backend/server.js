@@ -11,8 +11,9 @@ app.use(express.json());
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  // simple hardcoded user (for now)
-  if (email === "admin@gmail.com" && password === "1234") {
+  const user = await User.findOne({ email, password });
+
+  if (user) {
     res.send("success");
   } else {
     res.send("fail");
@@ -30,6 +31,24 @@ const studentSchema = new mongoose.Schema({
   course: String,  
   marks: Number,
   grade: String
+});
+
+const userSchema = new mongoose.Schema({
+  email: String,
+  password: String
+});
+
+const User = mongoose.model("User", userSchema);
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email, password });
+
+  if (user) {
+    res.send("success");
+  } else {
+    res.send("fail");
+  }
 });
 
 const Student = mongoose.model("Student", studentSchema);
