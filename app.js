@@ -10,21 +10,29 @@ function logout() {
 }
 
 // ➕ ADD STUDENT----------------------------------------------------------
-window.addStudent = async function () {
+async function addStudent() {
   const name = document.getElementById("name").value;
   const age = document.getElementById("age").value;
   const course = document.getElementById("course").value;
   const marks = document.getElementById("marks").value;
   const grade = document.getElementById("grade").value;
 
-  const response = await fetch(`${BASE_URL}/add`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": localStorage.getItem("token")
-  },
-  body: JSON.stringify({ name, age, course, marks, grade })
-});
+  try {
+    const response = await fetch(`${BASE_URL}/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, age, course, marks, grade })
+    });
+
+    const result = await response.text();
+
+    document.getElementById("msg").innerText = result;
+  } catch (err) {
+    document.getElementById("msg").innerText = "Server not responding";
+  }
+}
 
   const result = await response.text();
   const msg = document.getElementById("msg");
@@ -68,7 +76,7 @@ if (marks < 0 || marks > 100) {
 }
 
   viewStudents(); // auto refresh---------------------------------------
-}
+
 
 // 📄 VIEW STUDENTS (FROM DATABASE)---------------------------------
 window.viewStudents = async function () {
@@ -162,9 +170,8 @@ window.updateStudent = async function () {
   const response = await fetch(`${BASE_URL}/update/${id}`, {
   method: "PUT",
   headers: {
-    "Content-Type": "application/json",
-    "Authorization": localStorage.getItem("token")
-  },
+  "Content-Type": "application/json"
+},
   body: JSON.stringify({
   ...(name && { name }),
   ...(age && { age }),
