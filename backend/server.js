@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 app.use(cors());
-app.use(express.static(__dirname));
+app.use(express.json());
 
 const SECRET_KEY = "mysecret123";
 
@@ -40,15 +40,33 @@ const User = mongoose.model("User", {
 
 // ✅ SIGNUP
 app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const existing = await User.findOne({ email });
-  if (existing) return res.send("User exists");
+    if (!email || !password) {
+      return res.json({ message: "Missing fields" });
+    }
 
-  const hashed = await bcrypt.hash(password, 10);
-  await new User({ email, password: hashed }).save();
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({ message: "User already exists" });
+    }
 
-  res.send("success");
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      email,
+      password: hashedPassword
+    });
+
+    await newUser.save();
+
+    res.json({ message: "Signup successful" });
+
+  } catch (err) {
+    console.log("SIGNUP ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // ✅ LOGIN (FIXED)
