@@ -119,16 +119,7 @@ output.innerHTML = `
     <p><b>Course:</b> ${student.course}</p>
     <p><b>Marks:</b> ${student.marks}</p>
     <p><b>Grade:</b> ${student.grade}</p>
-  </div>
-
-  #msg.success {
-  color: #22c55e; /* green */
-}
-
-#msg.error {
-  color: #ef4444; /* red */
-}
-`;
+  </div>`;
   });
 
 } catch (err) {
@@ -303,4 +294,8 @@ function searchStudent() {
     });
 
   }, 400); // delay (400ms)
-}
+}const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
