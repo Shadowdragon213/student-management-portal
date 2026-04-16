@@ -38,7 +38,30 @@ document.getElementById("course").value = "";
 document.getElementById("marks").value = "";
 document.getElementById("grade").value = "";
 
-  viewStudents(); // auto refresh
+const msg = document.getElementById("msg");
+
+// empty check-----------------------------------------
+if (!name || !age || !course || !marks || !grade) {
+  msg.innerText = "Please fill all fields!";
+  msg.className = "error";
+  return;
+}
+
+// age check----------------------------
+if (age <= 0 || age > 100) {
+  msg.innerText = "Enter valid age!";
+  msg.className = "error";
+  return;
+}
+
+// marks check-----------------------------------------
+if (marks < 0 || marks > 100) {
+  msg.innerText = "Marks should be 0-100!";
+  msg.className = "error";
+  return;
+}
+
+  viewStudents(); // auto refresh---------------------------------------
 }
 
 // 📄 VIEW STUDENTS (FROM DATABASE)---------------------------------
@@ -148,6 +171,7 @@ async function updateStudent() {
 
   const result = await response.json();
 document.getElementById("msg").innerText = "Student updated!";
+msg.className = "success";
 setTimeout(() => {
   document.getElementById("msg").innerText = "";
 }, 2000);
@@ -157,6 +181,29 @@ document.getElementById("age").value = "";
 document.getElementById("course").value = "";
 document.getElementById("marks").value = "";
 document.getElementById("grade").value = "";
+
+const msg = document.getElementById("msg");
+
+// empty check----------------------------------------------------
+if (!name || !age || !course || !marks || !grade) {
+  msg.innerText = "Please fill all fields!";
+  msg.className = "error";
+  return;
+}
+
+// age check--------------------------------------------------------------
+if (age <= 0 || age > 100) {
+  msg.innerText = "Enter valid age!";
+  msg.className = "error";
+  return;
+}
+
+// marks check-----------------------------------------------------------
+if (marks < 0 || marks > 100) {
+  msg.innerText = "Marks should be 0-100!";
+  msg.className = "error";
+  return;
+}
 
   viewStudents(); // refresh
 }
@@ -169,11 +216,10 @@ async function loadStudentById() {
 
   const response = await fetch(`${BASE_URL}/students`);
   const students = await response.json();
-
   const student = students.find(s => s._id === id);
 
   if (!student) {
-  document.getElementById("msg").innerText = "Student not found!";
+  document.getElementById("msg").innerText = "Student not found!";                     
     
     setTimeout(() => {      
   document.getElementById("msg").innerText = "";

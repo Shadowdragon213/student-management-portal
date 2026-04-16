@@ -27,6 +27,24 @@
     opacity: 0.3;
 }
 
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 15px #2563eb;
+  transform: scale(1.05);
+}
+
+h1 {
+  text-shadow: 0 0 10px #2563eb;
+}
+
 .form-row {
   display: flex;
   justify-content: center;
@@ -69,8 +87,8 @@ input {
 }
 
 .navbar button:hover {
-    background: #2563eb;
-    color: white;
+    transform: scale(1.08);
+    box-shadow: 0 0 15px #2563eb;
 }
 
       body {
@@ -95,9 +113,13 @@ input {
 }
 input:focus {
   outline: none;
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+  box-shadow: 0 0 10px #2563eb;
   transform: scale(1.02);
   transition: 0.2s;
+}
+
+#msg {
+  transition: all 0.3s ease;
 }
 
 button {
@@ -105,15 +127,15 @@ button {
   margin: 10px;
   border: none;
   border-radius: 6px;
-  background-color: #2563eb;
+  background: #2563eb;
   color: white;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+  transform: scale(1.08);
+  box-shadow: 0 0 15px #2563eb;
 }
 
 button:active {
@@ -132,6 +154,10 @@ button:active {
   opacity: 0;
   transform: translateY(10px);
   animation: fadeIn 0.4s ease forwards;
+}
+
+.card:hover {
+  transform: scale(1.03);
 }
 
 @keyframes fadeIn {
@@ -170,7 +196,7 @@ button:active {
 </head>
 <body>
     <video autoplay muted loop id="bgVideo">
-    <source src="BG3.mp4" type="video/mp4">
+    <source src="background.mp4.mp4" type="video/mp4">
 </video>
 
 <div class="content">

@@ -3,6 +3,10 @@
 <head>
     <title>About</title>
     <style>
+
+        html {
+  scroll-behavior: smooth;
+}
         #bgVideo {
     position: fixed;
     right: 0;
@@ -36,11 +40,33 @@
     color: white;
 }
         body {
-            margin: 0;
-            font-family: Arial;
-            background: #0f172a;
-            color: white;
-        }
+  background: #020617;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.about-box {
+  margin: 80px auto;
+  padding: 30px;
+  max-width: 600px;
+  background: #0f172a;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.4);
+  transition: 0.3s;
+}
+
+
+
+h1 {
+  margin-bottom: 20px;
+  color: #2563eb;
+}
+
+p {
+  line-height: 1.6;
+  opacity: 0.9;
+}
 
         .navbar {
             background: #020617;
@@ -56,6 +82,11 @@
     </style>
 </head>
 <body>
+
+
+
+
+    
     <video autoplay muted loop id="bgVideo">
     <source src="BG3.mp4" type="video/mp4">
 </video>
@@ -70,8 +101,25 @@
 </div>
 
 <div class="content">
-    <h1>About This System</h1>
-    <p>This project is built using Java for backend and HTML for frontend interface.</p>
+    <div class="about-box">
+  <h1>About This Project</h1>
+
+  <p>
+    Welcome to the Student Management System — a simple yet powerful platform designed to manage student data efficiently.
+  </p>
+
+  <p>
+    This project demonstrates full-stack development using modern technologies, connecting frontend interfaces with backend logic and cloud databases.
+  </p>
+
+  <p>
+    With features like real-time updates, smart search, and clean UI design, it aims to deliver both usability and learning value.
+  </p>
+
+  <p>
+    Start exploring and experience how real-world systems are built — step by step.
+  </p>
+</div>
 </div>
 
 </body>

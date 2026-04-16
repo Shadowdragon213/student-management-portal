@@ -4,6 +4,38 @@
     <title>Student Management Portal</title>
     <style>
 
+
+html {
+  scroll-behavior: smooth;
+} 
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 15px #2563eb;
+  transform: scale(1.05);
+}
+
+h1 {
+  text-shadow: 0 0 10px #2563eb;
+}
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -210,15 +242,61 @@ button:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
+.section {
+  margin: 80px auto;
+  text-align: center;
+  max-width: 800px;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #0f172a;
+  padding: 20px;
+  border-radius: 10px;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #2563eb;
+}
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 15px #2563eb;
+  transform: scale(1.05);
+}
+
+h1 {
+  text-shadow: 0 0 10px #2563eb;
+}
+
+
+
     </style>
 </head>
 <body>
     <video autoplay muted loop id="bgVideo">
-    <source src="background,mp4.mp4" type="video/mp4">
+    <source src="BG2.mp4" type="video/mp4">
 </video>
 
     <!-- Navbar -->
-    <div class="navbar">
+    <div class="navbar fade-in">
         <h2>Student Portal</h2>
         <div>
             <button onclick="location.href='index.html'">Home</button>
@@ -233,19 +311,22 @@ button:hover {
         <h1>Manage Students Efficiently</h1>
         <p>A simple and powerful student management system</p>
 
-        <button onclick="enterSystem()">Enter System</button>
-        <button onclick="alert('Java + GUI Backend')">About</button>
+        <button onclick="window.location.href='login.html'">Enter System</button>
+       <button onclick="location.href='dashboard.html'">Get Started</button>
+<button onclick="location.href='about.html'">About</button>
     </div>
 
     <!-- Stats -->
-    <div class="stats">
+    <div class="stats fade-in">
         <div>
             <h2>500+</h2>
             <p>Students Managed</p>
         </div>
         <div>
-            <h2>95%</h2>
-            <p>Accuracy</p>
+            <h2>95%
+            </h2>
+            <p> Accuracy</p>
+            
         </div>
         <div>
             <h2>24/7</h2>
@@ -256,29 +337,45 @@ button:hover {
     <!-- Features -->
    
 
-   <div class="flow-section">
+   <div class="flow-section fade-ins">
     <h1>How It Works</h1>
 
-    <div class="flow">
-        <div class="step">Add Student</div>
-        <div class="arrow">➜</div>
-        <div class="step">Manage Data</div>
-        <div class="arrow">➜</div>
-        <div class="step">View Records</div>
+    <div class="flow fade-in">
+        <div class="step fade-in">Add Student</div>
+        <div class="arrow fade-in">➜</div>
+        <div class="step fade-in">Manage Data</div>
+        <div class="arrow fade-in">➜</div>
+        <div class="step fade-in">View Records</div>
     </div>
 </div>
-    <div class="why-section">
+    <div class="why-section fade-in">
     <h1>Why This System?</h1>
 
-    <div class="why-box">Efficiently manage large student data without errors</div>
-    <div class="why-box">Quick access to records anytime, anywhere</div>
-    <div class="why-box">Improves organization and reduces manual work</div>
+    <div class="why-box fade-in">Efficiently manage large student data without errors</div>
+    <div class="why-box fade-in">Quick access to records anytime, anywhere</div>
+    <div class="why-box fade-in">Improves organization and reduces manual work</div>
+</div>
+
+<div class="section fade-in">
+  <h2>Technologies Used</h2>
+  <p>
+    Built using HTML, CSS, JavaScript, Java, Node.js, Express, and MongoDB Atlas.
+  </p>
+</div>
+
+<div class="section fade-in">
+  <h2>Ready to Get Started?</h2>
+  <button onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
 </div>
 
     <script>
         function enterSystem() {
-    window.location.href = "login.html";
+    window.location.href = "login.html fade-in";
 }
+
+
+
+
     </script>
     <script>
 const boxes = document.querySelectorAll('.why-box');
@@ -292,14 +389,37 @@ window.addEventListener('scroll', () => {
             box.style.opacity = "1";
             box.style.transform = "translateY(0)";
         }
-    });
+     });
 });
+
+
+
 </script>
-<div class="footer">
+<div class="footer fade-in">
     <h3>Student Management Portal</h3>
     <p>Email: support@studentportal.com</p>
     <p>Phone: +91 9876543210</p>
     <p>© 2026 All Rights Reserved</p>
 </div>
+
+
+<script>
+  const elements = document.querySelectorAll('.fade-in');
+
+  function checkScroll() {
+    elements.forEach(el => {
+      const position = el.getBoundingClientRect().top;
+      const screenHeight = window.innerHeight;
+
+      if (position < screenHeight - 100) {
+        el.classList.add('show');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', checkScroll);
+  window.addEventListener('load', checkScroll);
+</script>
+
 </body>
 </html>
