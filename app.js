@@ -62,42 +62,44 @@ async function addStudent() {
     }
 }
 
-// 📄 VIEW STUDENTS
 window.viewStudents = async function () {
-  const output = document.getElementById("output");
+    const output = document.getElementById("output");
 
-  try {
-    const res = await fetch(`${BASE_URL}/students`, {
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token")
-      }
-    });
-
-    if (!res.ok) {
-      const text = await res.text();
-      output.innerHTML = text;
-      return;
-    }
-
-    const students = await res.json();
-
+    // 🧼 clear old content FIRST (fixes duplicates)
     output.innerHTML = "";
 
-    students.forEach(s => {
-      output.innerHTML += `
-        <div class="card">
-          <p><b>Name:</b> ${s.name}</p>
-          <p><b>Age:</b> ${s.age}</p>
-          <p><b>Course:</b> ${s.course}</p>
-        </div>
-      `;
-    });
+    try {
+        const res = await fetch(`${BASE_URL}/students`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        });
 
-  } catch (err) {
-    console.log(err);
-    output.innerHTML = "Something went wrong";
-  }
-}
+        // ❌ handle backend errors properly
+        if (!res.ok) {
+            const text = await res.text();
+            output.innerHTML = text || "Failed to load students";
+            return;
+        }
+
+        const students = await res.json();
+
+        // 🧱 render cleanly
+        students.forEach(s => {
+            output.innerHTML += `
+                <div class="card">
+                    <p><b>Name:</b> ${s.name}</p>
+                    <p><b>Age:</b> ${s.age}</p>
+                    <p><b>Course:</b> ${s.course}</p>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.log(err);
+        output.innerHTML = "Server error";
+    }
+};
 
 // ❌ DELETE
 window.deleteStudent = async function () {
