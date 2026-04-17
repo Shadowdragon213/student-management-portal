@@ -61,7 +61,7 @@ msg.innerText = data.message;
 window.viewStudents = async function () {
   const output = document.getElementById("output");
 
-  try {console.log(res);
+  try {console.log(students);
     const res = await fetch(`${BASE_URL}/students`, {
       headers: {
         
