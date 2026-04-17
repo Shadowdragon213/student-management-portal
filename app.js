@@ -1,5 +1,3 @@
-let searchTimeout;
-
 const BASE_URL = "https://student-management-portal4444.onrender.com";
 
 // 🔐 Logout
@@ -24,7 +22,7 @@ async function addStudent() {
     return;
   }
 
-  try {console.log(res);
+  try {
     const res = await fetch(`${BASE_URL}/add`, {
       method: "POST",
       headers: {
@@ -35,50 +33,49 @@ async function addStudent() {
     });
 
     if (!res.ok) {
-  const text = await res.text();
-  msg.innerText = text;
-  return;
-}
+      const text = await res.text();
+      msg.innerText = text;
+      return;
+    }
 
-const data = await res.json();
-msg.innerText = data.message;
+    const data = await res.json();
+    msg.innerText = data.message || "Student added";
 
-   document.getElementById("name").value = "";
-   document.getElementById("age").value = "";
-   document.getElementById("course").value = "";
-   document.getElementById("marks").value = "";
-   document.getElementById("grade").value = "";
+    // clear fields
+    document.getElementById("name").value = "";
+    document.getElementById("age").value = "";
+    document.getElementById("course").value = "";
+    document.getElementById("marks").value = "";
+    document.getElementById("grade").value = "";
 
     viewStudents();
 
   } catch (err) {
-  console.log(err);
-  msg.innerText = "Something went wrong";
-}
+    console.log(err);
+    msg.innerText = "Something went wrong";
+  }
 }
 
 // 📄 VIEW STUDENTS
 window.viewStudents = async function () {
   const output = document.getElementById("output");
 
-  try {console.log(students);
+  try {
     const res = await fetch(`${BASE_URL}/students`, {
       headers: {
-        
         "Authorization": "Bearer " + localStorage.getItem("token")
       }
-      
     });
 
-if (!res.ok) {
-  const text = await res.text();
-  output.innerHTML = text;
-  return;
-}
+    if (!res.ok) {
+      const text = await res.text();
+      output.innerHTML = text;
+      return;
+    }
 
-const students = await res.json();
+    const students = await res.json();
 
-output.innerHTML = ""; 
+    output.innerHTML = "";
 
     students.forEach(s => {
       output.innerHTML += `
@@ -91,23 +88,27 @@ output.innerHTML = "";
     });
 
   } catch (err) {
-  console.log(err);
-  output.innerHTML = "Something went wrong";
-}
+    console.log(err);
+    output.innerHTML = "Something went wrong";
+  }
 }
 
 // ❌ DELETE
 window.deleteStudent = async function () {
   const id = document.getElementById("id").value;
 
-  await fetch(`${BASE_URL}/delete/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    }
-  });
+  try {
+    await fetch(`${BASE_URL}/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      }
+    });
 
-  viewStudents();
+    viewStudents();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // ✏️ UPDATE
@@ -115,14 +116,18 @@ window.updateStudent = async function () {
   const id = document.getElementById("id").value;
   const name = document.getElementById("name").value;
 
-  await fetch(`${BASE_URL}/update/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    },
-    body: JSON.stringify({ name })
-  });
+  try {
+    await fetch(`${BASE_URL}/update/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      body: JSON.stringify({ name })
+    });
 
-  viewStudents();
+    viewStudents();
+  } catch (err) {
+    console.log(err);
+  }
 }
