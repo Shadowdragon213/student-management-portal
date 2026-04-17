@@ -57,11 +57,11 @@ window.viewStudents = async function () {
   try {
     const res = await fetch(`${BASE_URL}/students`, {
       headers: {
-        "Authorization": localStorage.getItem("token")
+        "Authorization": "Bearer " + localStorage.getItem("token")
       }
     });
 
-const students = await response.json();
+const students = await res.json();
 
 output.innerHTML = ""; 
 
@@ -87,7 +87,7 @@ window.deleteStudent = async function () {
   await fetch(`${BASE_URL}/delete/${id}`, {
     method: "DELETE",
     headers: {
-      "Authorization": localStorage.getItem("token")
+      "Authorization": "Bearer " + localStorage.getItem("token")
     }
   });
 
@@ -103,7 +103,7 @@ window.updateStudent = async function () {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": localStorage.getItem("token")
+      "Authorization": "Bearer " + localStorage.getItem("token")
     },
     body: JSON.stringify({ name })
   });
