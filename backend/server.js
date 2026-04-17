@@ -14,7 +14,7 @@ const SECRET_KEY = "mysecret123";
 function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
 
-  if (!authHeader) return res.send("Access Denied");
+  if (!authHeader) return res.status(401).json({ message: "Access Denied" });
 
   const token = authHeader.split(" ")[1];
 
@@ -23,7 +23,7 @@ function verifyToken(req, res, next) {
     req.user = verified;
     next();
   } catch {
-    res.send("Invalid Token");
+    res.status(403).json({ message: "Invalid Token" });
   }
 }
 
