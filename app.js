@@ -29,13 +29,13 @@ async function addStudent() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token")
+        "Authorization": "Bearer " + localStorage.getItem("token")
       },
       body: JSON.stringify({ name, age, course, marks, grade })
     });
 
-    const data = await res.text();
-    msg.innerText = data;
+    const data = await res.json();
+msg.innerText = data.message;
 
    document.getElementById("name").value = "";
    document.getElementById("age").value = "";
