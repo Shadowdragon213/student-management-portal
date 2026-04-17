@@ -34,7 +34,13 @@ async function addStudent() {
       body: JSON.stringify({ name, age, course, marks, grade })
     });
 
-    const data = await res.json();
+    if (!res.ok) {
+  const text = await res.text();
+  msg.innerText = text;
+  return;
+}
+
+const data = await res.json();
 msg.innerText = data.message;
 
    document.getElementById("name").value = "";
@@ -60,6 +66,12 @@ window.viewStudents = async function () {
         "Authorization": "Bearer " + localStorage.getItem("token")
       }
     });
+
+if (!res.ok) {
+  const text = await res.text();
+  output.innerHTML = text;
+  return;
+}
 
 const students = await res.json();
 
