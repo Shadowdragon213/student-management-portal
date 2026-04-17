@@ -24,7 +24,7 @@ async function addStudent() {
     return;
   }
 
-  try {
+  try {console.log(res);
     const res = await fetch(`${BASE_URL}/add`, {
       method: "POST",
       headers: {
@@ -51,20 +51,23 @@ msg.innerText = data.message;
 
     viewStudents();
 
-  } catch {
-    msg.innerText = "Server not responding";
-  }
+  } catch (err) {
+  console.log(err);
+  msg.innerText = "Something went wrong";
+}
 }
 
 // 📄 VIEW STUDENTS
 window.viewStudents = async function () {
   const output = document.getElementById("output");
 
-  try {
+  try {console.log(res);
     const res = await fetch(`${BASE_URL}/students`, {
       headers: {
+        
         "Authorization": "Bearer " + localStorage.getItem("token")
       }
+      
     });
 
 if (!res.ok) {
@@ -87,9 +90,10 @@ output.innerHTML = "";
       `;
     });
 
-  } catch {
-    output.innerHTML = "Server not responding";
-  }
+  } catch (err) {
+  console.log(err);
+  output.innerHTML = "Something went wrong";
+}
 }
 
 // ❌ DELETE
