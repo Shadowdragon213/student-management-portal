@@ -8,52 +8,58 @@ function logout() {
   window.location.href = "login.html";
 }
 
-// ➕ ADD STUDENT
 async function addStudent() {
-  const name = document.getElementById("name").value;
-  const age = document.getElementById("age").value;
-  const course = document.getElementById("course").value.toUpperCase();
-  const marks = document.getElementById("marks").value;
-  const grade = document.getElementById("grade").value;
-  const msg = document.getElementById("msg");
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const course = document.getElementById("course").value.toUpperCase();
+    const marks = document.getElementById("marks").value;
+    const grade = document.getElementById("grade").value;
+    const msg = document.getElementById("msg");
 
-  if (!name || !age || !course || !marks || !grade) {
-    msg.innerText = "Fill all fields";
-    return;
-  }
+    // 🔥 clear old messages first
+    msg.innerText = "";
 
-  try {
-    const res = await fetch(`${BASE_URL}/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token")
-      },
-      body: JSON.stringify({ name, age, course, marks, grade })
-    });
-
-    if (!res.ok) {
-      const text = await res.text();
-      msg.innerText = text;
-      return;
+    if (!name || !age || !course || !marks || !grade) {
+        msg.innerText = "Fill all fields";
+        return;
     }
 
-    const data = await res.json();
-    msg.innerText = data.message || "Student added";
+    try {
+        const res = await fetch(`${BASE_URL}/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: JSON.stringify({ name, age, course, marks, grade })
+        });
 
-    // clear fields
-    document.getElementById("name").value = "";
-    document.getElementById("age").value = "";
-    document.getElementById("course").value = "";
-    document.getElementById("marks").value = "";
-    document.getElementById("grade").value = "";
+        // 🔥 handle server errors properly
+        if (!res.ok) {
+            const text = await res.text();
+            msg.innerText = text || "Failed to add student";
+            return;
+        }
 
-    viewStudents();
+        const data = await res.json();
 
-  } catch (err) {
-    console.log(err);
-    msg.innerText = "Something went wrong";
-  }
+        // ✅ clean success message (no old error stays)
+        msg.innerText = data.message || "Student added successfully";
+
+        // ✅ clear inputs
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("course").value = "";
+        document.getElementById("marks").value = "";
+        document.getElementById("grade").value = "";
+
+        // ✅ refresh list
+        viewStudents();
+
+    } catch (err) {
+        console.log(err);
+        msg.innerText = "Server error";
+    }
 }
 
 // 📄 VIEW STUDENTS
