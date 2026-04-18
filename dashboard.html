@@ -165,11 +165,78 @@ button:active {
   flex-wrap: wrap;
 }
 
-.card {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 0.4s ease forwards;
+/* 🔥 GRID LAYOUT */
+#output {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 20px;
 }
+
+/* 💎 CARD */
+.card {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 20px;
+  padding: 25px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
+
+/* ✨ HOVER EFFECT */
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* 🔹 HEADER */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.student-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.student-grade {
+  background: #22c55e;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* 📄 BODY */
+.card-body p {
+  margin: 6px 0;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* 🔘 BUTTON */
+.card-actions {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.card-actions button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.card-actions button:hover {
+  background: #2563eb;
+}
+
+
 
 .card:hover {
   transform: scale(1.03);
@@ -224,6 +291,7 @@ button:active {
 .card-actions button:hover {
   background: #357abd;
 }
+
 
 @keyframes fadeIn {
   to {
