@@ -6,6 +6,7 @@
 <title>Dashboard</title>
 
 <style>
+/* 🌌 BODY */
 body {
   margin: 0;
   font-family: Arial;
@@ -13,25 +14,25 @@ body {
   color: white;
 }
 
-/* 🎥 background */
+/* 🎥 BACKGROUND VIDEO */
 #bgVideo {
   position: fixed;
   right: 0;
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  z-index: -1;
   object-fit: cover;
-  opacity: 0.3;
+  opacity: 0.15;
+  z-index: -1;
 }
 
-/* 📦 layout */
+/* 📦 CONTENT */
 .content {
   text-align: center;
   padding: 40px;
 }
 
-/* 🧾 form */
+/* 🧾 FORM */
 .form-row {
   display: flex;
   justify-content: center;
@@ -47,12 +48,12 @@ input {
   max-width: 250px;
 }
 
-/* 🔘 buttons */
+/* 🔘 BUTTONS */
 button {
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
   transition: 0.3s;
@@ -71,29 +72,37 @@ button:hover {
   flex-wrap: wrap;
 }
 
-/* 🔥 GRID FIX (MAIN THING) */
+/* ⭐ SECTION TITLE */
+.section-title {
+  margin-top: 50px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 🔥 GRID (MAIN STAR) */
 #output {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto;
   padding: 20px;
-  margin-top: 30px;
 }
 
 /* 💎 CARD */
 .card {
   background: linear-gradient(145deg, #1e293b, #0f172a);
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
   transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-10px) scale(1.04);
 }
 
-/* 🔹 HEADER */
+/* 🔹 CARD HEADER */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -102,37 +111,40 @@ button:hover {
 }
 
 .student-name {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: bold;
 }
 
 .student-grade {
   background: #22c55e;
-  padding: 5px 12px;
-  border-radius: 10px;
+  padding: 6px 14px;
+  border-radius: 12px;
   font-weight: bold;
+  font-size: 14px;
 }
 
-/* 📄 BODY */
+/* 📄 CARD BODY */
 .card-body p {
-  margin: 6px 0;
+  margin: 8px 0;
+  font-size: 16px;
 }
 
-/* 🔘 BUTTON */
+/* 🔘 CARD BUTTON */
 .card-actions {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .card-actions button {
   background: #3b82f6;
-  padding: 10px 15px;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
 }
 
 .card-actions button:hover {
   background: #2563eb;
 }
+
 </style>
 
 <script>
