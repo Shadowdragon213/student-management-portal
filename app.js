@@ -57,7 +57,7 @@ async function addStudent() {
   }
 }
 
-// 📄 VIEW STUDENTS (FINAL FIXED)
+// 📄 VIEW STUDENTS (FINAL UI VERSION)
 window.viewStudents = async function () {
   const output = document.getElementById("output");
   output.innerHTML = "";
@@ -78,17 +78,24 @@ window.viewStudents = async function () {
 
     students.forEach(s => {
       output.innerHTML += `
-        <div class="card" style="margin-bottom:20px; padding:15px; border-radius:10px; background:#1e2a38;">
-          <p><b>ID:</b> ${s._id}</p>
-          <p><b>Name:</b> ${s.name}</p>
-          <p><b>Age:</b> ${s.age}</p>
-          <p><b>Course:</b> ${s.course}</p>
-          <p><b>Marks:</b> ${s.marks}</p>
-          <p><b>Grade:</b> ${s.grade}</p>
+        <div class="card">
+          <div class="card-header">
+            <span class="student-name">${s.name}</span>
+            <span class="student-grade">${s.grade}</span>
+          </div>
 
-          <button onclick="fillForm('${s._id}','${s.name}','${s.age}','${s.course}','${s.marks}','${s.grade}')">
-            Select
-          </button>
+          <div class="card-body">
+            <p>🎓 Course: ${s.course}</p>
+            <p>📊 Marks: ${s.marks}</p>
+            <p>🎂 Age: ${s.age}</p>
+            <p style="font-size:10px; opacity:0.6;">ID: ${s._id}</p>
+          </div>
+
+          <div class="card-actions">
+            <button onclick="fillForm('${s._id}','${s.name}','${s.age}','${s.course}','${s.marks}','${s.grade}')">
+              Select
+            </button>
+          </div>
         </div>
       `;
     });
@@ -99,7 +106,7 @@ window.viewStudents = async function () {
   }
 };
 
-// 🎯 AUTO-FILL FORM (VERY IMPORTANT UX)
+// 🎯 AUTO-FILL FORM
 function fillForm(id, name, age, course, marks, grade) {
   document.getElementById("id").value = id;
   document.getElementById("name").value = name;
@@ -114,7 +121,7 @@ window.deleteStudent = async function () {
   const id = document.getElementById("id").value;
 
   if (!id) {
-    alert("Enter ID or select student");
+    alert("Select student first");
     return;
   }
 
@@ -132,7 +139,7 @@ window.deleteStudent = async function () {
   }
 };
 
-// ✏️ UPDATE (FULL FIX)
+// ✏️ UPDATE
 window.updateStudent = async function () {
   const id = document.getElementById("id").value;
 
