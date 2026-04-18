@@ -169,3 +169,7 @@ window.updateStudent = async function () {
     console.log(err);
   }
 };
+
+function goToView() {
+  window.location.href = "view.html";
+}

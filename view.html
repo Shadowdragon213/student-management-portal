@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Students</title>
+
+<style>
+
+/* 🌌 BODY */
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
+
+/* 🎥 BACKGROUND VIDEO */
+#bgVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+  z-index: -1;
+}
+
+/* 📦 CONTENT */
+.container {
+  padding: 40px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* 🔙 BACK BUTTON */
+.back-btn {
+  margin-bottom: 30px;
+}
+
+/* 🔥 GRID */
+#output {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* 💎 CARD */
+.card {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+
+/* ✨ HOVER EFFECT */
+.card:hover {
+  transform: translateY(-10px) scale(1.04);
+}
+
+/* 🔹 HEADER */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.student-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.student-grade {
+  background: #22c55e;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* 📄 BODY */
+.card-body p {
+  margin: 6px 0;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* 🔘 BUTTON */
+.card-actions {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.card-actions button {
+  background: #3b82f6;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card-actions button:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+/* 🔘 GENERAL BUTTON */
+button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #2563eb;
+}
+
+</style>
+
+<script>
+// 🔐 PROTECT PAGE
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  alert("Please login first!");
+  window.location.href = "login.html";
+}
+</script>
+
+</head>
+
+<body>
+
+<!-- 🎥 BACKGROUND VIDEO -->
+<video autoplay muted loop id="bgVideo">
+  <source src="BG32453.mp4" type="video/mp4">
+</video>
+
+<div class="container">
+
+<h1>All Students</h1>
+<p class="subtitle">View and manage all student records</p>
+
+<div class="back-btn">
+  <button onclick="goBack()">⬅ Back to Dashboard</button>
+</div>
+
+<div id="output"></div>
+
+</div>
+
+<script src="app.js"></script>
+
+<script>
+// 🔙 BACK
+function goBack() {
+  window.location.href = "dashboard.html";
+}
+
+// 🚀 AUTO LOAD
+viewStudents();
+</script>
+
+</body>
+</html>
