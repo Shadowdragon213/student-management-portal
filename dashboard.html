@@ -6,6 +6,7 @@
 <title>Dashboard</title>
 
 <style>
+
 /* 🌌 BODY */
 body {
   margin: 0;
@@ -22,17 +23,38 @@ body {
   min-width: 100%;
   min-height: 100%;
   object-fit: cover;
-  opacity: 0.15;
+  opacity: 0.12;
   z-index: -1;
 }
 
-/* 📦 CONTENT */
-.content {
+/* 📦 CONTAINER */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
   text-align: center;
-  padding: 40px;
 }
 
-/* 🧾 FORM */
+/* 🌟 HEADER */
+.header h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.header p {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* 💎 FORM CARD */
+.form-box {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+/* 🧾 FORM ROW */
 .form-row {
   display: flex;
   justify-content: center;
@@ -40,12 +62,13 @@ body {
   margin: 10px 0;
 }
 
+/* INPUT */
 input {
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: none;
-  width: 90%;
-  max-width: 250px;
+  width: 100%;
+  max-width: 300px;
 }
 
 /* 🔘 BUTTONS */
@@ -53,96 +76,31 @@ button {
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  border-radius: 10px;
+  padding: 12px 22px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px #2563eb;
+  transform: scale(1.06);
+  box-shadow: 0 0 12px #2563eb;
 }
 
+/* BUTTON GROUP */
 .btn-group {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-top: 15px;
+  margin-top: 20px;
   flex-wrap: wrap;
 }
 
-/* ⭐ SECTION TITLE */
-.section-title {
-  margin-top: 50px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* 🔥 GRID (MAIN STAR) */
-#output {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
-}
-
-/* 💎 CARD */
-.card {
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  border-radius: 22px;
-  padding: 30px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px) scale(1.04);
-}
-
-/* 🔹 CARD HEADER */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.student-name {
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.student-grade {
-  background: #22c55e;
-  padding: 6px 14px;
-  border-radius: 12px;
-  font-weight: bold;
+/* ✨ FOOT TEXT */
+.footer-text {
+  margin-top: 30px;
+  opacity: 0.6;
   font-size: 14px;
-}
-
-/* 📄 CARD BODY */
-.card-body p {
-  margin: 8px 0;
-  font-size: 16px;
-}
-
-/* 🔘 CARD BUTTON */
-.card-actions {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.card-actions button {
-  background: #3b82f6;
-  padding: 12px 20px;
-  border-radius: 10px;
-}
-
-.card-actions button:hover {
-  background: #2563eb;
 }
 
 </style>
@@ -162,33 +120,49 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
   <source src="background.mp4.mp4" type="video/mp4">
 </video>
 
-<div class="content">
-<h1>Student Dashboard</h1>
+<div class="container">
 
-<div class="form-row">
-  <input id="id" placeholder="ID">
-  <input id="name" placeholder="Name">
-</div>
+  <!-- 🌟 HEADER -->
+  <div class="header">
+    <h1>Student Dashboard</h1>
+    <p>Manage student records efficiently — add, update, delete and view all data in one place.</p>
+  </div>
 
-<div class="form-row">
-  <input id="age" placeholder="Age">
-  <input id="course" placeholder="Course">
-</div>
+  <!-- 💎 FORM -->
+  <div class="form-box">
 
-<div class="form-row">
-  <input type="number" id="marks" placeholder="Marks">
-  <input id="grade" placeholder="Grade">
-</div>
+    <div class="form-row">
+      <input id="id" placeholder="Student ID">
+      <input id="name" placeholder="Student Name">
+    </div>
 
-<input id="search" placeholder="Search by name..." />
+    <div class="form-row">
+      <input id="age" placeholder="Age">
+      <input id="course" placeholder="Course">
+    </div>
 
-<div class="btn-group">
-  <button onclick="addStudent()">Add</button>
-  <button onclick="goToView()">View</button>
-  <button onclick="deleteStudent()">Delete</button>
-  <button onclick="updateStudent()">Update</button>
-  <button onclick="logout()">Logout</button>
-</div>
+    <div class="form-row">
+      <input type="number" id="marks" placeholder="Marks">
+      <input id="grade" placeholder="Grade (A/B/C)">
+    </div>
+
+    <div class="form-row">
+      <input id="search" placeholder="Search by name..." oninput="searchStudent()">
+    </div>
+
+    <div class="btn-group">
+      <button onclick="addStudent()">Add</button>
+      <button onclick="goToView()">View</button>
+      <button onclick="deleteStudent()">Delete</button>
+      <button onclick="updateStudent()">Update</button>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+  </div>
+
+  <!-- ✨ FOOT -->
+  <p class="footer-text">Student Management Portal </p>
+
 </div>
 
 <script src="app.js"></script>
