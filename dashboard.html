@@ -18,9 +18,12 @@ body {
 /* 🎥 VIDEO */
 #bgVideo {
   position: fixed;
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
   opacity: 0.08;
   z-index: -1;
 }
