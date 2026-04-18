@@ -1,101 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Management Portal</title>
-    <style>
+<title>Student Management Portal</title>
 
+<style>
 
-html {
-  scroll-behavior: smooth;
-} 
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.fade-in.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
-  transition: 0.3s;
-}
-
-button:hover {
-  box-shadow: 0 0 15px #2563eb;
-  transform: scale(1.05);
-}
-
-h1 {
-  text-shadow: 0 0 10px #2563eb;
-}
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  background: #0f172a;
 }
 
-/* Glass effect */
-.glass {
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-}
-.flow-section {
-    text-align: center;
-    padding: 120px 20px;
-}
-
-.flow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-}
-
-.step {
-    background: rgba(30, 41, 59, 0.7);
-    padding: 30px;
-    border-radius: 20px;
-    width: 200px;
-    font-size: 18px;
-    backdrop-filter: blur(8px);
-    transition: 0.3s;
-}
-
-.step:hover {
-    transform: scale(1.05);
-}
-
-.arrow {
-    font-size: 40px;
-    color: #60a5fa;
-}
-
-        .why-section {
-    text-align: center;
-    padding: 100px 20px;
-}
-
-.why-box {
-    background: rgba(30, 41, 59, 0.6);
-    margin: 30px auto;
-    padding: 25px;
-    border-radius: 20px;
-    width: 55%;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 0.6s;
-    backdrop-filter: blur(8px);
-}
+/* 🎥 VIDEO */
 #bgVideo {
   position: fixed;
   top: 0;
@@ -103,333 +20,230 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.30; 
+  opacity: 0.18;
   z-index: -2;
 }
 
+/* ✨ OVERLAY */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(59,130,246,0.15), rgba(0,0,0,0.6));
+  background: radial-gradient(circle at center, rgba(59,130,246,0.2), rgba(0,0,0,0.7));
   z-index: -1;
 }
 
-        button {
-    padding: 12px 25px;
-    margin: 10px;
-    border: none;
-    border-radius: 8px;
-    background-color: #2563eb;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: #1d4ed8;
-    transform: scale(1.05);
-}
-        html {
-    scroll-behavior: smooth;
-}
-.navbar button:hover {
-    background: #2563eb;
-    box-shadow: 0 0 10px #2563eb;
-}
-        .navbar button {
-    background: transparent;
-    color: white;
-    border: none;
-    margin-left: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.navbar button:hover {
-    background: #2563eb;
-    color: white;
-}
-        .hero {
-    text-align: center;
-    padding: 100px 20px;
-    animation: fadeIn 1.5s ease-in;
-}
-.footer {
-    text-align: center;
-    padding: 40px;
-    background: rgba(2, 6, 23, 0.8);
-    margin-top: 50px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-        body {
-            margin: 0;
-            font-family: Arial;
-            background-color: #0f172a;
-            color: white;
-        }
-
-        /* Navbar */
-        
-        .navbar {
-            background: #020617;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            
-        }
-
-        .navbar h2 {
-            margin: 0;
-        }
-
-        .navbar button {
-            background: transparent;
-            color: white;
-            border: none;
-            margin-left: 15px;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-       .hero {
-    text-align: center;
-    padding: 120px 20px;
-}
-
-        .hero h1 {
-            font-size: 40px;
-        }
-
-        .hero button {
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2563eb;
-            color: white;
-            cursor: pointer;
-        }
-
-        
-
-        /* Stats */
-       .stats {
-    display: flex;
-    justify-content: space-around;
-    padding: 50px;
-    background: #1e293b;
-    border-radius: 10px;
-    margin: 20px;
-}
-
-        .stats div {
-            text-align: center;
-        }
-
-        /* Features */
-       .features {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    gap: 20px;
-}
-
-.card {
-    background: #1e293b;
-    padding: 15px;
-    border-radius: 20px;
-    width: 40%;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.section {
-  margin: 80px auto;
-  text-align: center;
-  max-width: 800px;
-}
-
-.features {
+/* 🔷 NAVBAR (UPGRADED) */
+.navbar {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.card {
-  background: #0f172a;
-  padding: 20px;
-  border-radius: 10px;
-  width: 200px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  transition: 0.3s;
+.navbar h2 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #2563eb;
-}
-button {
-  background: #2563eb;
+.navbar button {
+  background: transparent;
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
+  margin-left: 20px;
+  font-size: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.navbar button:hover {
+  background: rgba(59,130,246,0.3);
+  box-shadow: 0 0 10px #2563eb;
+}
+
+/* 🌟 HERO */
+.hero {
+  text-align: center;
+  padding: 140px 20px 100px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  text-shadow: 0 0 15px #3b82f6;
+}
+
+.hero p {
+  opacity: 0.8;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+/* BUTTONS */
+button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 26px;
+  margin: 8px;
+  cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  box-shadow: 0 0 15px #2563eb;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 20px #2563eb;
+}
+
+/* 📊 STATS (UPGRADED) */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 60px auto;
+  padding: 40px;
+  width: 85%;
+  border-radius: 20px;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+.stats div h2 {
+  font-size: 30px;
+  margin-bottom: 5px;
+  color: #60a5fa;
+}
+
+/* 🧠 FLOW */
+.flow-section {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.flow {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.step {
+  background: rgba(30,41,59,0.6);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.step:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 15px #2563eb;
 }
 
-h1 {
-  text-shadow: 0 0 10px #2563eb;
+.arrow {
+  font-size: 30px;
+  color: #60a5fa;
 }
 
+/* 💡 WHY */
+.why-section {
+  text-align: center;
+  padding: 80px 20px;
+}
 
+.why-box {
+  margin: 20px auto;
+  width: 60%;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(30,41,59,0.5);
+  backdrop-filter: blur(8px);
+}
 
-    </style>
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 40px;
+  margin-top: 60px;
+  background: rgba(2,6,23,0.7);
+}
+
+</style>
 </head>
+
 <body>
-    <video autoplay muted loop id="bgVideo">
-    <source src="BG2.mp4" type="video/mp4">
+
+<video autoplay muted loop id="bgVideo">
+  <source src="BG2.mp4" type="video/mp4">
 </video>
 
-    <!-- Navbar -->
-    <div class="navbar fade-in">
-        <h2>Student Portal</h2>
-        <div>
-            <button onclick="location.href='index.html'">Home</button>
-<button onclick="location.href='dashboard.html'">Dashboard</button>
-<button onclick="location.href='about.html'">About</button>
-        </div>
-    </div>
-
-    <!-- Hero -->
-     
-    <div class="hero">
-        <h1>Manage Students Efficiently</h1>
-        <p>A simple and powerful student management system</p>
-
-        <button onclick="window.location.href='login.html'">Enter System</button>
-       <button onclick="location.href='dashboard.html'">Get Started</button>
-<button onclick="location.href='about.html'">About</button>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats fade-in">
-        <div>
-            <h2>500+</h2>
-            <p>Students Managed</p>
-        </div>
-        <div>
-            <h2>95%
-            </h2>
-            <p> Accuracy</p>
-            
-        </div>
-        <div>
-            <h2>24/7</h2>
-            <p>Access</p>
-        </div>
-    </div>
-
-    <!-- Features -->
-   
-
-   <div class="flow-section fade-ins">
-    <h1>How It Works</h1>
-
-    <div class="flow fade-in">
-        <div class="step fade-in">Add Student</div>
-        <div class="arrow fade-in">➜</div>
-        <div class="step fade-in">Manage Data</div>
-        <div class="arrow fade-in">➜</div>
-        <div class="step fade-in">View Records</div>
-    </div>
-</div>
-    <div class="why-section fade-in">
-    <h1>Why This System?</h1>
-
-    <div class="why-box fade-in">Efficiently manage large student data without errors</div>
-    <div class="why-box fade-in">Quick access to records anytime, anywhere</div>
-    <div class="why-box fade-in">Improves organization and reduces manual work</div>
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2>Student Portal</h2>
+  <div>
+    <button onclick="location.href='index.html'">Home</button>
+    <button onclick="location.href='dashboard.html'">Dashboard</button>
+    <button onclick="location.href='about.html'">About</button>
+  </div>
 </div>
 
-<div class="section fade-in">
-  <h2>Technologies Used</h2>
-  <p>
-    Built using HTML, CSS, JavaScript, Java, Node.js, Express, and MongoDB Atlas.
-  </p>
+<!-- HERO -->
+<div class="hero">
+  <h1>Manage Students Efficiently</h1>
+  <p>A simple and powerful student management system</p>
+
+  <button onclick="window.location.href='login.html'">Enter System</button>
+  <button onclick="location.href='dashboard.html'">Get Started</button>
+  <button onclick="location.href='about.html'">About</button>
 </div>
 
-<div class="section fade-in">
-  <h2>Ready to Get Started?</h2>
-  <button onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
+<!-- STATS -->
+<div class="stats">
+  <div>
+    <h2>500+</h2>
+    <p>Students Managed</p>
+  </div>
+  <div>
+    <h2>95%</h2>
+    <p>Accuracy</p>
+  </div>
+  <div>
+    <h2>24/7</h2>
+    <p>Access</p>
+  </div>
 </div>
 
-    <script>
-        function enterSystem() {
-    window.location.href = "login.html fade-in";
-}
-
-
-
-
-    </script>
-    <script>
-const boxes = document.querySelectorAll('.why-box');
-
-window.addEventListener('scroll', () => {
-    boxes.forEach(box => {
-        const position = box.getBoundingClientRect().top;
-        const screenHeight = window.innerHeight;
-
-        if (position < screenHeight - 100) {
-            box.style.opacity = "1";
-            box.style.transform = "translateY(0)";
-        }
-     });
-});
-
-
-
-</script>
-<div class="footer fade-in">
-    <h3>Student Management Portal</h3>
-    <p>Email: support@studentportal.com</p>
-    <p>Phone: +91 9876543210</p>
-    <p>© 2026 All Rights Reserved</p>
+<!-- FLOW -->
+<div class="flow-section">
+  <h1>How It Works</h1>
+  <div class="flow">
+    <div class="step">Add Student</div>
+    <div class="arrow">➜</div>
+    <div class="step">Manage Data</div>
+    <div class="arrow">➜</div>
+    <div class="step">View Records</div>
+  </div>
 </div>
 
+<!-- WHY -->
+<div class="why-section">
+  <h1>Why This System?</h1>
+  <div class="why-box">Efficiently manage large student data without errors</div>
+  <div class="why-box">Quick access to records anytime, anywhere</div>
+  <div class="why-box">Improves organization and reduces manual work</div>
+</div>
 
-<script>
-  const elements = document.querySelectorAll('.fade-in');
-
-  function checkScroll() {
-    elements.forEach(el => {
-      const position = el.getBoundingClientRect().top;
-      const screenHeight = window.innerHeight;
-
-      if (position < screenHeight - 100) {
-        el.classList.add('show');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', checkScroll);
-  window.addEventListener('load', checkScroll);
-</script>
+<!-- FOOTER -->
+<div class="footer">
+  <h3>Student Management Portal</h3>
+  <p>© 2026 All Rights Reserved</p>
+</div>
 
 </body>
 </html>
