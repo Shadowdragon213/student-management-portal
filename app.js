@@ -40,8 +40,7 @@ async function addStudent() {
       return;
     }
 
-    const data = await res.json();
-    msg.innerText = data.message || "Student added successfully";
+    msg.innerText = "Student added successfully";
 
     // clear inputs
     document.getElementById("name").value = "";
@@ -58,10 +57,9 @@ async function addStudent() {
   }
 }
 
-// 📄 VIEW STUDENTS
+// 📄 VIEW STUDENTS (FINAL FIXED)
 window.viewStudents = async function () {
   const output = document.getElementById("output");
-
   output.innerHTML = "";
 
   try {
@@ -72,8 +70,7 @@ window.viewStudents = async function () {
     });
 
     if (!res.ok) {
-      const text = await res.text();
-      output.innerHTML = text || "Failed to load students";
+      output.innerHTML = "Failed to load students";
       return;
     }
 
@@ -81,12 +78,17 @@ window.viewStudents = async function () {
 
     students.forEach(s => {
       output.innerHTML += `
-        <div class="card">
+        <div class="card" style="margin-bottom:20px; padding:15px; border-radius:10px; background:#1e2a38;">
+          <p><b>ID:</b> ${s._id}</p>
           <p><b>Name:</b> ${s.name}</p>
           <p><b>Age:</b> ${s.age}</p>
           <p><b>Course:</b> ${s.course}</p>
           <p><b>Marks:</b> ${s.marks}</p>
           <p><b>Grade:</b> ${s.grade}</p>
+
+          <button onclick="fillForm('${s._id}','${s.name}','${s.age}','${s.course}','${s.marks}','${s.grade}')">
+            Select
+          </button>
         </div>
       `;
     });
@@ -97,9 +99,24 @@ window.viewStudents = async function () {
   }
 };
 
+// 🎯 AUTO-FILL FORM (VERY IMPORTANT UX)
+function fillForm(id, name, age, course, marks, grade) {
+  document.getElementById("id").value = id;
+  document.getElementById("name").value = name;
+  document.getElementById("age").value = age;
+  document.getElementById("course").value = course;
+  document.getElementById("marks").value = marks;
+  document.getElementById("grade").value = grade;
+}
+
 // ❌ DELETE
 window.deleteStudent = async function () {
   const id = document.getElementById("id").value;
+
+  if (!id) {
+    alert("Enter ID or select student");
+    return;
+  }
 
   try {
     await fetch(`${BASE_URL}/delete/${id}`, {
@@ -118,6 +135,12 @@ window.deleteStudent = async function () {
 // ✏️ UPDATE (FULL FIX)
 window.updateStudent = async function () {
   const id = document.getElementById("id").value;
+
+  if (!id) {
+    alert("Select student first");
+    return;
+  }
+
   const name = document.getElementById("name").value;
   const age = document.getElementById("age").value;
   const course = document.getElementById("course").value;
